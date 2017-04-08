@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
+    android:id="@+id/mLongClickView"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -10,9 +11,9 @@
 
     <com.newbeeee.qt.nbvoicewaveview.VoiceWaveView
         android:id="@+id/voice_wave_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="120dp"
+        android:layout_height="160dp"
         app:imageSrc="@drawable/ic_record"
-        android:layout_centerInParent="true"
-        />
+        app:maxVolume="85"
+        android:layout_centerInParent="true" />
 </RelativeLayout>

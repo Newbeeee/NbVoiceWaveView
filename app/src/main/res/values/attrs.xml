@@ -5,6 +5,6 @@
         <attr name="imageSrc" format="reference"/>
         <attr name="maxVolume" format="float"/>
         <attr name="waveColor" format="color"/>
-        <attr name="adjustValue" format="integer"/>
+        <attr name="adjustValue" format="float"/>
     </declare-styleable>
 </resources>

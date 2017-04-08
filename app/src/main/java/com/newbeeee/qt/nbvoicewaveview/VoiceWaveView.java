@@ -19,17 +19,17 @@ import android.view.View;
 
 public class VoiceWaveView extends View {
 
-    private static final int DEFAULT_MAX_VOLUME = 100;
+    private static final float DEFAULT_MAX_VOLUME = 85;
     private static final int DEFAULT_WAVE_COLOR = Color.parseColor("#4fe7ef");
-    private static final int DEFAULT_ADJUST_VALUE = 50;
+    private static final float DEFAULT_ADJUST_VALUE = 1;
 
 
     // 默认声音最大值
-    private float maxVolume = DEFAULT_MAX_VOLUME;
+    public static float maxVolume = DEFAULT_MAX_VOLUME;
     // 波浪颜色
     private int waveColor = DEFAULT_WAVE_COLOR;
     // 可以调整波浪高度在屏幕的显示
-    private int adjustValue = DEFAULT_ADJUST_VALUE;
+    public static float adjustValue = DEFAULT_ADJUST_VALUE;
 
     private Paint mBitPaint;
     private static Bitmap mBitmap;
@@ -42,7 +42,7 @@ public class VoiceWaveView extends View {
     // 波浪 rect 目前的 top
     private int mCurrentTop;
     // 波浪高度百分比
-    private float waveHeightPer = 0;
+    private double waveHeightPer = 0;
 
 
     public VoiceWaveView(Context context) {
@@ -77,7 +77,7 @@ public class VoiceWaveView extends View {
             }
             maxVolume = typedArray.getFloat(R.styleable.voiceWaveView_maxVolume, DEFAULT_MAX_VOLUME);
             waveColor = typedArray.getColor(R.styleable.voiceWaveView_waveColor, DEFAULT_WAVE_COLOR);
-            adjustValue = typedArray.getInteger(R.styleable.voiceWaveView_adjustValue, DEFAULT_ADJUST_VALUE);
+            adjustValue = typedArray.getFloat(R.styleable.voiceWaveView_adjustValue, DEFAULT_ADJUST_VALUE);
             typedArray.recycle();
         }
     }
@@ -135,12 +135,12 @@ public class VoiceWaveView extends View {
             canvas.drawBitmap(mBitmap, mSrcRect, mDstRect, mBitPaint);
             // 原图片为 dst，新画的 mDynamicRect 为 src
             mBitPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-            canvas.drawRect(mDynamicRect, mBitPaint);
-            mBitPaint.setXfermode(null);
-            canvas.restoreToCount(saveLayerCount);
             // top 为 0 和 计算值的最大值，如果计算值为负数，则 top 为 0 , 即声波占满图片
             mCurrentTop = (int) Math.max((mTotalHeight - waveHeightPer / adjustValue * mTotalHeight), 0);
             mDynamicRect.top = mCurrentTop;
+            canvas.drawRect(mDynamicRect, mBitPaint);
+            mBitPaint.setXfermode(null);
+            canvas.restoreToCount(saveLayerCount);
         }
     }
 
@@ -164,8 +164,13 @@ public class VoiceWaveView extends View {
         mDynamicRect = new Rect(0, mCurrentTop, mTotalWidth, mTotalHeight);
     }
 
-    public void setVolume(int volume) {
-        waveHeightPer = (float) (volume + 0.0 / maxVolume);
+    public void setVolume(double volume) {
+        waveHeightPer = volume / maxVolume;
+        invalidate();
+    }
+
+    public void reset() {
+        waveHeightPer = 0;
         invalidate();
     }
 }
