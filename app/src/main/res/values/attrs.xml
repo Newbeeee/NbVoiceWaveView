@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="voiceWaveView">
-        <attr name="imageSrc" format="reference"/>
-        <attr name="maxVolume" format="float"/>
-        <attr name="waveColor" format="color"/>
-        <attr name="adjustValue" format="float"/>
-    </declare-styleable>
+
 </resources>

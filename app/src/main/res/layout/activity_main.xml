@@ -9,7 +9,25 @@
     android:background="@color/colorBg"
     tools:context="com.newbeeee.qt.nbvoicewaveview.MainActivity">
 
-    <com.newbeeee.qt.nbvoicewaveview.VoiceWaveView
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/long_click"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/colorAccent"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/touch_up"
+        android:layout_below="@+id/text1"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/colorAccent"/>
+
+    <com.newbeeee.qt.voice_wave_view.VoiceWaveView
         android:id="@+id/voice_wave_view"
         android:layout_width="120dp"
         android:layout_height="160dp"

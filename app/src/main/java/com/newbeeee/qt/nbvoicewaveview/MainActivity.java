@@ -12,6 +12,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.newbeeee.qt.voice_wave_view.VoiceWaveView;
+
 public class MainActivity extends AppCompatActivity {
 
     private VoiceWaveView mVoiceWaveView;

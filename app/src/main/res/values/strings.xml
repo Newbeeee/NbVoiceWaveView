@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">NbVoiceWaveView</string>
+    <string name="long_click">press long to record</string>
+    <string name="touch_up">loose to stop recording</string>
 </resources>

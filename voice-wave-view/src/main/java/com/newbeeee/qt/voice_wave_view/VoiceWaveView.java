@@ -1,4 +1,4 @@
-package com.newbeeee.qt.nbvoicewaveview;
+package com.newbeeee.qt.voice_wave_view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -69,10 +69,8 @@ public class VoiceWaveView extends View {
             int n = typedArray.getIndexCount();
             for (int i = 0; i < n; i++) {
                 int attr = typedArray.getIndex(i);
-                switch (attr) {
-                    case R.styleable.voiceWaveView_imageSrc:
-                        mBitmap = BitmapFactory.decodeResource(getResources(), typedArray.getResourceId(attr, 0));
-                        break;
+                if (attr == R.styleable.voiceWaveView_imageSrc) {
+                    mBitmap = BitmapFactory.decodeResource(getResources(), typedArray.getResourceId(attr, 0));
                 }
             }
             maxVolume = typedArray.getFloat(R.styleable.voiceWaveView_maxVolume, DEFAULT_MAX_VOLUME);
@@ -99,11 +97,11 @@ public class VoiceWaveView extends View {
         int width;
         int height;
 
-        if (widthMode == MeasureSpec.EXACTLY){
+        if (widthMode == MeasureSpec.EXACTLY) {
             width = widthSize;
-        } else{
+        } else {
             int desired = getPaddingLeft() + getPaddingRight();
-            desired += (mBitmap != null) ? mBitmap.getWidth():0;
+            desired += (mBitmap != null) ? mBitmap.getWidth() : 0;
             width = desired;
             if (widthMode == MeasureSpec.AT_MOST) {
                 width = Math.min(desired, widthSize);
@@ -114,7 +112,7 @@ public class VoiceWaveView extends View {
             height = heightSize;
         } else {
             int desired = getPaddingTop() + getPaddingBottom();
-            desired += (mBitmap != null) ? mBitmap.getHeight():0;
+            desired += (mBitmap != null) ? mBitmap.getHeight() : 0;
             height = desired;
             if (heightMode == MeasureSpec.AT_MOST) {
                 height = Math.min(desired, heightSize);
