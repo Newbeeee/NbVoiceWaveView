@@ -1,11 +1,11 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
-version = "1.0.0"    //这个是版本号，必须填写
+version = "1.0.4"    //这个是版本号，必须填写
 def siteUrl = 'https://github.com/Newbeeee/NbVoiceWaveView' // 项目的主页
 def gitUrl = 'https://github.com/Newbeeee/NbVoiceWaveView' // Git仓库的url
 
-group = "com.newbeeee.qt.nbvoicewaveview" // 这里是groupId ,必须填写  一般填你唯一的包名
+group = "com.newbeeee.qt" // 这里是groupId ,必须填写  一般填你唯一的包名
 
 install {
     repositories.mavenInstaller {
@@ -48,13 +48,37 @@ task sourcesJar(type: Jar) {
     classifier = 'sources'
 }
 
-
-
-
 artifacts {
 //    archives javadocJar
     archives sourcesJar
 }
+
+android.libraryVariants.all { variant ->
+    println variant.javaCompile.classpath.files
+    if(variant.name == 'release') { //我们只需 release 的 javadoc
+        task("generate${variant.name.capitalize()}Javadoc", type: Javadoc) {
+            // title = ''
+            // description = ''
+            source = variant.javaCompile.source
+            classpath = files(variant.javaCompile.classpath.files, project.android.getBootClasspath())
+            options {
+                encoding "utf-8"
+                links "http://docs.oracle.com/javase/7/docs/api/"
+                linksOffline "http://d.android.com/reference", "${android.sdkDirectory}/docs/reference"
+            }
+            exclude '**/BuildConfig.java'
+            exclude '**/R.java'
+        }
+        task("javadoc${variant.name.capitalize()}Jar", type: Jar, dependsOn: "generate${variant.name.capitalize()}Javadoc") {
+            classifier = 'javadoc'
+            from tasks.getByName("generate${variant.name.capitalize()}Javadoc").destinationDir
+        }
+        artifacts {
+            archives tasks.getByName("javadoc${variant.name.capitalize()}Jar")
+        }
+    }
+}
+
 
 // 生成jar包
 task releaseJar(type: Copy) {
@@ -79,7 +103,7 @@ bintray {
     configurations = ['archives']
     pkg {
         userOrg = "newbeeee"        //发布到JCenter的组织，注意新版本的bintray是需要手动创建的
-        repo = "voice-wave-view"              //发布到JCenter上的仓库名称，注意新版本的bintray是需要手动创建的
+        repo = "maven"              //发布到JCenter上的仓库名称，注意新版本的bintray是需要手动创建的
         // 发布到Bintray上的项目名字
         name = "voice-wave-view"
         websiteUrl = siteUrl
@@ -117,4 +141,10 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.2.0'
     testCompile 'junit:junit:4.12'
+}
+
+android {
+    lintOptions {
+        abortOnError false
+    }
 }

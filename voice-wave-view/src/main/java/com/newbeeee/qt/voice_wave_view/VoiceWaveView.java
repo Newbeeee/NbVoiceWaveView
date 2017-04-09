@@ -19,7 +19,7 @@ import android.view.View;
 
 public class VoiceWaveView extends View {
 
-    private static final float DEFAULT_MAX_VOLUME = 85;
+    private static final float DEFAULT_MAX_VOLUME = 86;
     private static final int DEFAULT_WAVE_COLOR = Color.parseColor("#4fe7ef");
     private static final float DEFAULT_ADJUST_VALUE = 1;
 
